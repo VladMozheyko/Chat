@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.util.Scanner;
-
+//TODO Сформировать формат для чтения объект
 public class Client implements TCPConnectionListener{
 
     TCPConnection tcpConnection;  // Контракт для связи клиент и сервера
@@ -32,7 +32,7 @@ public class Client implements TCPConnectionListener{
 
     @Override
     public void onMessageReceived(TCPConnection tcpConnection, String str) {
-        System.out.println("Сообщение:" + str);
+        System.out.println("Сообщение:" + str + " от: " + tcpConnection.getSocket().getPort());
     }
 
     @Override

@@ -35,6 +35,7 @@ class ServerTest {
             server.onConnectionReady(new TCPConnection(tcpConnectionListener,"127.0.0.1", 8085));
         } catch (IOException e) {
 
+            System.err.println(e);
         }
         Assertions.assertEquals(1, server.getConnections().size());
     }

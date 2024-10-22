@@ -1,11 +1,15 @@
 import java.net.ServerSocket;
 import java.util.ArrayList;
 
+
 public class Server implements TCPConnectionListener {
 
     public ArrayList<TCPConnection> getConnections() {
         return connections;
     }
+
+
+
 
     private ArrayList<TCPConnection> connections = new ArrayList<>();
     TCPConnection connection;
@@ -22,7 +26,6 @@ public class Server implements TCPConnectionListener {
             }
         }
         catch (Exception ex){
-            //  System.out.println("Error");
 
         }
     }
@@ -31,7 +34,6 @@ public class Server implements TCPConnectionListener {
     public void onConnectionReady(TCPConnection tcpConnection) {
          connections.add(tcpConnection);
          sendToAllConnections("Привет от сервера");
-
     }
 
     @Override
@@ -41,6 +43,16 @@ public class Server implements TCPConnectionListener {
 
     @Override
     public void onMessageReceived(TCPConnection tcpConnection, String str) {
+
+        System.out.println("Сервер получил сообщение: " + str + " от: " + tcpConnection.getSocket().getInetAddress() +
+                " " + tcpConnection.getSocket().getPort());
+        String[] params = str.split("n");
+
+        for (int i = 0; i < params.length; i++) {
+            System.out.println(params[i]);
+        }
+
+
         tcpConnection.setSenderTrue();
         for (int i = 0; i < connections.size(); i++) {
             connections.get(i).setReceiverTrue();
@@ -56,6 +68,11 @@ public class Server implements TCPConnectionListener {
         connections.remove(tcpConnection);
     }
 
+
+    /**
+     * Метод для оптравки сообщений наблюдателям
+     * @param msg
+     */
     public void sendToAllConnections(String msg){
         for (int i = 0; i < connections.size(); i++) {
               if(connections.get(i).isReceiver() && !connections.get(i).isSender()){
