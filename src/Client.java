@@ -10,6 +10,7 @@ public class Client implements TCPConnectionListener{
     }
 
     public Client() throws IOException {
+        System.out.println("Введите сообщение");
         Scanner scanner = new Scanner(System.in);    //Поток ввода из консоли
         tcpConnection = new TCPConnection(this, "127.0.0.1", 8085);
         String msg = "";
